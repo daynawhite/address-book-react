@@ -1,32 +1,42 @@
 import axios from 'axios';
 import './App.css';
 import { useState, useEffect } from 'react';
-import UserCard from './components/UserCard';
+import UserCard from './components/UserCard'
 
 
 
 function App() {
   const [users, setUsers] = useState([]);
-
-  const getUsersFromApi = () => {
-    axios.get('https://randomuser.me/api?results=25')
-    // I blindly copied this from the teacher's example but I don't understand it and could not replicate it on my own!
+  useEffect(() => {
+    axios.get('https://randomuser.me/api?results=20')
     .then(res => {
       const { data } = res;
-      // this.setState({
-      //   users: data.results.map(user => ({...user, show: false}))
-      // })
-      setUsers(data.results.map(user => ({ ...user, show: false }) ))
-    })
+      setUsers(data.results.map(user => 
+        ({ ...user, showEmail: false }) ))
+    })}, [users]
+  )
 
-  useEffect(getUsersFromApi, [])
-
+  const toggleEmail = (user) => {
+    setUsers(
+      users.map(u => {
+        if (u.email === user.email) {
+          return {
+            ...user,
+            showEmail: !user.showEmail
+          }
+        }
+      })
+    )
   }
 
   return (
-    <div>
-    </div>
-  );
+    <ul>
+      {users.map(user => (
+      < UserCard user={user} handleClick={toggleEmail} />
+      ))}
+    </ul>
+  )
 }
+
 
 export default App;
