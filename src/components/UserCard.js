@@ -1,9 +1,15 @@
 import { Card, Button } from 'react-bootstrap';
+import { useEffect } from 'react';
 
 function UserCard(props) {
     const { user } = props;
+
+useEffect(() => {
+    console.log(user)
+},[])
+
     return (
-        <Card show={user.show} style={{ width: '18rem' }}>
+        <Card  style={{ width: '18rem' }}>
             <Card.Img variant="top" src={user.picture.large} />
             <Card.Body>
             <Card.Title>{user.name.first} {user.name.last}</Card.Title>

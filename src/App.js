@@ -13,19 +13,24 @@ function App() {
       const { data } = res;
       setUsers(data.results.map(user => 
         ({ ...user, showEmail: false }) ))
-    })}, [users]
+    })}, []
   )
+
 
   const toggleEmail = (user) => {
     setUsers(
       users.map(u => {
+        // console.log(u, 'toggle email')
         if (u.email === user.email) {
+          console.log(user, 'current userr')
           return {
             ...user,
             showEmail: !user.showEmail
           }
         }
+        return u
       })
+      
     )
   }
 
